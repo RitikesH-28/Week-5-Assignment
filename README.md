@@ -2,9 +2,10 @@
 
 ## 📝 Overview
 
-This project simulates a **real-time dynamic pricing system** for parking lots. It models how parking prices can adjust dynamically based on **traffic conditions**, **lot occupancy**, and **time of day**, aiming to optimize utilization and maximize revenue.
-
-It uses streaming architecture principles with **Pathway**, and offers **interactive data visualization** via **Bokeh** and **Panel** in a live dashboard environment (e.g., Google Colab).
+This project demonstrates a real-time, dynamic pricing system for urban parking lots using streaming data
+processing techniques.
+ It adjusts prices based on live parameters like occupancy, traffic, and time, simulating a smart pricing
+model.
 
 ---
 
@@ -31,3 +32,34 @@ graph TD
     D --> E[Transformed DataFrame]
     E --> F[Bokeh Charts]
     F --> G[Panel Dashboard]
+
+
+## Repository Structure
+ - dataset.csv: Input data
+ - main.ipynb: Notebook with logic and visuals
+ - requirements.txt: Dependencies
+ - README.md: Documentation
+ - report.pdf: This file (optional)
+ - screenshots/: Dashboard images (optional)
+
+
+Use Cases
+ - Smart city parking optimization
+ - Dynamic revenue management
+ - Simulation before production deployment
+ - Extendable to real-time sensor inputs
+
+Future Enhancements
+ - Integration with real-time APIs (Google Maps, etc.)
+ - Predictive ML models
+ - Availability notifications
+- User feedback collection and price perception analytics
+
+Author & References
+ Author: RitikesH Bhardwaj
+ GitHub: https://github.com/RitikesH-28
+ References:
+ - Pathway Docs: https://pathway.com/docs/
+ - Bokeh: https://docs.bokeh.org/
+ - Panel: https://panel.holoviz.org/
+ - Mermaid Live Editor: https://mermaid.live/
