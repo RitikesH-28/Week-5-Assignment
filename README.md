@@ -1,171 +1,176 @@
-# 🚗 Real-Time Competitive Pricing Simulation for Parking
-
-This project demonstrates a real-time dynamic pricing simulation system for a smart parking solution. It uses real-time streaming data and adjusts parking prices dynamically based on **traffic intensity**, **demand**, and **timestamp**. The goal is to make pricing **adaptive and competitive**, while ensuring fairness and maximizing utility for both service providers and consumers.
-
-This project was developed as part of a Week 5 assignment exploring **real-time data pipelines**, **event-driven pricing**, and **interactive visualization dashboards** using modern Python tools.
+# 🚗 Real-Time Parking Price Simulation Engine  
+> A real-time data pipeline using Pathway for dynamic, competitive parking pricing with live analytics and dashboard.
 
 ---
 
-## 🔧 Tech Stack Used
+## 📌 Overview
 
-| Layer              | Technology                           | Purpose                                                   |
-|-------------------|---------------------------------------|-----------------------------------------------------------|
-| 📊 Data Handling   | `pandas`, `numpy`                     | Reading and preprocessing time-series CSV data            |
-| 🔄 Stream Engine   | `Pathway`                             | Real-time data ingestion, transformation, and pipeline    |
-| 📈 Visualization   | `Bokeh`, `Matplotlib`                 | Interactive plotting and graphs                           |
-| 🖥️ Dashboard       | `Panel`                               | Displaying real-time visual output                        |
-| 🧪 Environment     | Google Colab / Jupyter Notebook       | Cloud-based execution or local analysis                   |
-| 📁 Input Data      | CSV File (`dataset.csv`)              | Simulated or real parking data                            |
+This project showcases a real-time pricing simulation system for smart parking management using **Pathway**, a modern data framework for stream processing and analytics. By ingesting and transforming live or simulated parking data (traffic, demand, timestamps), it dynamically adjusts parking prices per area to ensure competitive rates based on actual conditions.
+
+This project combines **Python**, **Pathway**, **Panel**, and **Bokeh** to create a reactive and interactive dashboard, perfect for applications in **smart city infrastructure**, **transport optimization**, or **IoT-driven urban planning**.
 
 ---
 
-## 📐 System Architecture
+## 🚀 Key Features
 
-```mermaid
+- 🔁 Real-time ETL pipeline using Pathway
+- 💡 Dynamic pricing based on traffic & demand
+- 📈 Interactive Bokeh/Panel dashboard
+- ⚡ Fast updates & live visualization
+- 🧠 Scalable and memory-efficient
+- 📦 Easily deployable with Docker or Colab
+
+---
+
+## 🧰 Tech Stack
+
+| Layer        | Tools & Libraries        | Role                          |
+|--------------|--------------------------|-------------------------------|
+| Data Input   | `CSV` / Live Streaming   | Simulated parking traffic     |
+| Engine       | `Pathway`                | Real-time processing          |
+| Processing   | `Pandas`, `NumPy`        | Data transformation           |
+| Visualization| `Bokeh`, `Matplotlib`    | Interactive plots             |
+| Dashboard    | `Panel`                  | GUI/UX interactivity          |
+| Environment  | `Google Colab`, `Docker` | Dev & deployment              |
+
+---
+
+## 📐 Architecture Diagram
+
+mermaid
 graph TD
-    A[📂 CSV Input Data] --> B[🧠 Preprocessing]
-    B --> C[🔁 Pathway Streaming Pipeline]
-    C --> D[💰 Dynamic Pricing Algorithm]
-    D --> E[📈 Bokeh Visualization]
-    E --> F[🖼️ Panel Dashboard]
-    C --> G[📤 Real-time Pricing Output]
-📚 Project Structure and Workflow
-1. Dataset
-The data comes from a CSV file named dataset.csv, containing the following columns:
+    A[📂 dataset.csv or Live Stream] --> B[🧠 Pathway Processing Engine]
+    B --> C[💸 Dynamic Pricing Logic]
+    C --> D[📈 Bokeh + Panel Visualization]
+    D --> E[🖼️ Interactive Dashboard (Colab / Web)]
+⚙️ How It Works
+Data Ingestion:
+The system reads from a simulated CSV or live data stream, containing fields like Area, Traffic, Demand, LastUpdatedTime, etc.
 
-Area – Parking zone
+Preprocessing:
+Columns are merged into timestamps, cleaned, and passed into Pathway’s stream abstraction using PythonReader.
 
-LastUpdatedDate and LastUpdatedTime – Time of last data point
+Dynamic Pricing Logic:
+Based on input conditions, pricing is adjusted:
 
-BasePrice – Initial parking fee
+High Traffic → +30% increase
 
-Traffic – Real-time traffic rating (e.g., Low, Medium, High)
+High Demand → +40% increase
 
-Demand – Customer demand rating (e.g., Low, Medium, High)
+Combined surge effects apply
 
-All timestamps are merged to create a continuous Timestamp column.
+Streaming & Updates:
+Pathway manages state, consistency, and late updates using in-memory streaming.
 
-2. Real-Time Data Processing with Pathway
-The system uses Pathway to simulate a streaming input, monitoring changes in data.
+Visualization:
+Bokeh & Panel render charts showing:
 
-A custom logic table updates prices dynamically using real-time values.
+Price over time
 
-The algorithm scales prices based on:
+Area-wise comparisons
 
-High traffic → Higher prices
+Demand/Traffic overlays
 
-High demand → Surge pricing
-
-Low activity → Discounts to attract drivers
-
-3. Dynamic Pricing Logic
-Pricing logic applies weights to the traffic and demand signals. Example logic:
-
-python
-Copy
-Edit
-def compute_dynamic_price(base, traffic, demand):
-    factor = 1.0
-    if traffic == 'High':
-        factor += 0.3
-    elif traffic == 'Medium':
-        factor += 0.15
-
-    if demand == 'High':
-        factor += 0.4
-    elif demand == 'Medium':
-        factor += 0.2
-
-    return round(base * factor, 2)
-4. Visualization
-Bokeh creates interactive plots for:
-
-Price vs Time
-
-Traffic vs Demand overlays
-
-Area-wise price differences
-
-Panel hosts a real-time dashboard with:
-
-Drop-down filters for Area or Time
-
-Tooltips and dynamic charts
-
-Real-time refresh capability (if run in Colab)
-
-5. Execution Instructions
-🖥️ Setup Instructions
+📦 Installation
+🔧 Local Setup
 bash
 Copy
 Edit
-# Clone the repo
+# Clone the repository
 git clone https://github.com/RitikesH-28/Week-5-Assignment.git
 cd Week-5-Assignment
 
 # Install dependencies
-pip install pandas numpy bokeh panel matplotlib pathway
-▶️ Run the Notebook
-Open main_notebook.ipynb in Jupyter or Google Colab
+pip install pandas numpy pathway panel bokeh matplotlib
+▶️ Run Locally
+Load dataset.csv
 
-Upload or load dataset.csv
+Open main_notebook.ipynb in Jupyter or Colab
 
-Run cells step-by-step to:
+Run cells in order
 
-Load and preprocess data
+Dashboard launches via pn.serve(...) or inline for notebooks
 
-Stream data via Pathway
+🐳 Docker Deployment
+Dockerfile (example):
 
-Compute real-time prices
+dockerfile
+Copy
+Edit
+FROM python:3.10-slim
 
-Launch interactive dashboard
+RUN pip install -U pathway pandas numpy bokeh panel matplotlib
 
-📁 Folder Structure
+WORKDIR /app
+COPY . /app
+
+CMD ["python", "main_script.py"]
+Build & Run:
+
+bash
+Copy
+Edit
+docker build -t parking-simulator .
+docker run -it --rm -p 5006:5006 parking-simulator
+☁️ Cloud & Colab Support
+You can also run this project in Google Colab with just one click:
+
+Open main_notebook.ipynb in Google Colab
+
+Upload dataset.csv
+
+Run all cells
+
+Launch interactive output inside notebook using Panel
+
+🧪 Example Output
+📉 Time series of parking prices
+
+📍 Pricing comparison by area
+
+⚠️ Visual alerts for high congestion zones
+
+📊 Combined heatmap for traffic and demand
+
+📁 Repository Structure
 bash
 Copy
 Edit
 Week-5-Assignment/
-│
-├── dataset.csv                # Sample data with pricing fields
-├── main_notebook.ipynb       # Main simulation code
-├── README.md                 # Full documentation
-├── report.pdf (optional)     # Additional project write-up (if available)
-📑 Sample Output Features
-🚦 Real-time charts for traffic and pricing impact
+├── dataset.csv                # Simulated parking data
+├── main_notebook.ipynb       # Notebook with full simulation
+├── main_script.py            # Python version (optional)
+├── Dockerfile                # For Docker-based deployment
+├── README.md                 # Full project documentation
+└── report.pdf (optional)     # Formal project report
+📜 Licensing
+This project is open-sourced under the MIT License for academic/demo purposes.
 
-🏷️ Annotated graphs with tooltips
+If you plan to use this in production, consult the licensing terms of Pathway, which uses BSL 1.1 (free for most uses, transitions to Apache-2.0 in 4 years).
 
-📉 Live adjustment of pricing over a stream
+📚 References
+🔗 Pathway Docs
 
-📍 Area filter and custom selection
+📘 Bokeh Documentation
 
-📄 Optional Documentation
-If you want to add a formal project report:
+🖼️ Panel Library
 
-Prepare a report.pdf including:
+☁️ Google Colab
 
-Introduction
+💬 Support & Community
+Need help?
 
-Objective
+🧑‍💻 Raise an issue in this repository
 
-System Design
+💬 Join the Pathway Discord: community link
 
-Code Overview
+📧 Contact: ritikeshbhardwaj.dev@gmail.com
 
-Output Screenshots
+👏 Acknowledgments
+Huge thanks to:
 
-Conclusion
+The Pathway Team for their incredible real-time framework
 
-Upload the PDF in the repository root (/report.pdf)
+The developers behind Bokeh and Panel for great open-source visualization tools
 
-🙏 Acknowledgments
-Pathway for real-time processing framework
-
-Bokeh and Panel for powerful Python-based visualization
-
-Google Colab for seamless cloud execution
-
-📬 Contact
-Developed by: RitikesH-28
-GitHub: https://github.com/RitikesH-28
-For questions, open an issue or message directly.
+Open-source contributors everywhere ❤️
